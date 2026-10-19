@@ -311,7 +311,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 7
 --- !u!114 &-9100718216548418846
 MonoBehaviour:
@@ -326,7 +326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthbar: {fileID: 4198749250526034145}
-  maxHealth: 100
+  maxHealth: 25
   scoreValue: 10
   moveSpeed: 2
   zigzagFrequency: 2

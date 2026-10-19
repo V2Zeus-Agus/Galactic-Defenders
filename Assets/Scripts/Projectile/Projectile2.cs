@@ -20,31 +20,32 @@ public class Projectile2 : MonoBehaviour
 
     public Vector2 moveDirection;
 
+    private Rigidbody2D rb;
+
     void OnEnable()
     {
-        // Encontrar el Pool solo si no lo has asignado previamente
         if (bulletPool == null)
-        {
             bulletPool = FindObjectOfType<PoolBulletPlayer>();
-        }
 
+        rb = GetComponent<Rigidbody2D>();
+        rb.velocity = Vector2.zero;
+        rb.velocity = transform.up * moveSpeed;
 
-        // Obtener el componente AudioSource
         audioSource = GetComponent<AudioSource>();
-
-        // Reproducir el sonido de disparo
         if (shootSound != null && audioSource != null)
-        {
             audioSource.PlayOneShot(shootSound);
-        }
 
-        // Iniciar corrutina que desactiva la bala después de su tiempo de vida
         StartCoroutine(DeactivateAfterTime(lifespan));
+    }
+
+    void FixedUpdate()
+    {
+        // Vacío
     }
 
     void Update()
     {
-        transform.Translate(Vector2.up * moveSpeed * Time.deltaTime);
+        // Vacío
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -192,14 +193,13 @@ public class Projectile2 : MonoBehaviour
 
     void DeactivateBullet()
     {
+        if (!gameObject.activeSelf) return; // Evitar llamadas dobles
+
+        rb.velocity = Vector2.zero;
+        gameObject.SetActive(false); // Desactivar primero, siempre
+
         if (bulletPool != null)
-        {
-            bulletPool.ReturnBullet(gameObject);  // Recicla la bala
-        }
-        else
-        {
-            gameObject.SetActive(false);  // Desactiva si no hay pool
-        }
+            bulletPool.ReturnBullet(gameObject);
     }
 
     void OnDisable()

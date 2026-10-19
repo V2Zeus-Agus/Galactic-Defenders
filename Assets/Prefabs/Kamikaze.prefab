@@ -313,7 +313,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &6698425644866826082
 MonoBehaviour:
@@ -376,7 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthbar: {fileID: 1350608643270800657}
-  maxHealth: 100
+  maxHealth: 25
   valueKamikaze: 40
   dropProbability: 0
   dropItemPrefab: {fileID: 2079447832053176235, guid: 35619b5cb7bd57840ba69fdb85fef4ca, type: 3}

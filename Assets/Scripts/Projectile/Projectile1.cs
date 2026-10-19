@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Projectile1 : MonoBehaviour
@@ -7,76 +7,44 @@ public class Projectile1 : MonoBehaviour
     public GameManager gameManager;
     public float moveSpeed;
     public float damage;
-    public float lifespan = 1f; // Duración de la bala antes de desactivarse
+    public float lifespan = 1f;
     private PoolBulletPlayer bulletPool;
 
-    public AudioClip shootSound;          // Sonido al disparar
-    public AudioClip impactSound;         // Sonido al impactar
-    private AudioSource audioSource;      // Componente para reproducir sonido
+    public AudioClip shootSound;
+    public AudioClip impactSound;
+    private AudioSource audioSource;
 
     public ProjectileShoot projectileShoot;
+
+    private Rigidbody2D rb;
 
     void OnEnable()
     {
         if (bulletPool == null)
-        {
             bulletPool = FindObjectOfType<PoolBulletPlayer>();
-        }
-        if (projectileShoot == null)
-        {
-       
-        }
-        
-        if (projectileShoot != null)
-        {
-            // Buscar al Player en la escena
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
-            {
-              ;
-                // Obtener el componente ProjectileShoot del Player
-                projectileShoot = player.GetComponent<ProjectileShoot>();
-                if (projectileShoot != null)
-                {
-                    
-                }
-                else
-                {
-                    
-                }
-            }
-            else
-            {
-               
-            }
-        }
+
+        rb = GetComponent<Rigidbody2D>();
+        rb.velocity = Vector2.zero;
+        rb.velocity = transform.up * moveSpeed * 2f;
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+            projectileShoot = player.GetComponent<ProjectileShoot>();
 
         audioSource = GetComponent<AudioSource>();
-
         if (shootSound != null && audioSource != null)
-        {
             audioSource.PlayOneShot(shootSound);
-        }
 
         StartCoroutine(DeactivateAfterTime(lifespan));
     }
 
-    void Awake()
-    {
-        var rb = GetComponent<Rigidbody2D>();
-        if (rb != null) rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-    }
-
-
     void Update()
     {
-        transform.Translate(Vector2.up * moveSpeed * Time.deltaTime);
+        // Vacío - el Rigidbody maneja el movimiento
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        // Comprobar colisiones con enemigos y aplicar daño
         if (collision.gameObject.CompareTag("EnemyPhasatron"))
         {
             Phasatron enemy = collision.gameObject.GetComponent<Phasatron>();
@@ -86,22 +54,23 @@ public class Projectile1 : MonoBehaviour
             {
                 float damageAmount = enemy.maxHealth * 0.21f;
                 enemy.TakeDamage(damageAmount);
-                
             }
             if (enemy2 != null)
             {
                 float damageAmount = enemy2.maxHealth * 0.16f;
                 enemy2.TakeDamage(damageAmount);
-
             }
-            if(enemy3 != null)
+            if (enemy3 != null)
             {
                 float damageAmount = enemy3.maxHealth * 0.13f;
                 enemy3.TakeDamage(damageAmount);
             }
 
+            if (projectileShoot != null)
+                projectileShoot.IncreaseCharge();
 
             DeactivateBullet();
+            return;
         }
 
         if (collision.gameObject.CompareTag("EnemyWall"))
@@ -119,46 +88,53 @@ public class Projectile1 : MonoBehaviour
                 healthPared2.TakeDamage(damageAmount);
             }
 
+            if (projectileShoot != null)
+                projectileShoot.IncreaseCharge();
+
             DeactivateBullet();
+            return;
         }
 
         if (collision.gameObject.CompareTag("EnemyKamikaze"))
         {
             Kamikaze enemyHealth = collision.GetComponent<Kamikaze>();
             Kamikaze2 enemyHealth2 = collision.GetComponent<Kamikaze2>();
-
             if (enemyHealth != null)
-            {
                 enemyHealth.TakeDamage(60f);
-            }
             if (enemyHealth2 != null)
-            {
                 enemyHealth2.TakeDamage(55f);
-            }
 
+            if (projectileShoot != null)
+                projectileShoot.IncreaseCharge();
 
             DeactivateBullet();
+            return;
         }
 
         if (collision.gameObject.CompareTag("CrazyKamikaze"))
         {
             Kamikaze2 enemyHealth = collision.GetComponent<Kamikaze2>();
             if (enemyHealth != null)
-            {
                 enemyHealth.TakeDamage(100f);
-            }
+
+            if (projectileShoot != null)
+                projectileShoot.IncreaseCharge();
 
             DeactivateBullet();
+            return;
         }
 
         if (collision.gameObject.CompareTag("EnemyShip"))
         {
             EnemyFlyThrough enemyHealth = collision.GetComponent<EnemyFlyThrough>();
             if (enemyHealth != null)
-            {
                 enemyHealth.TakeDamage(100f);
-            }
+
+            if (projectileShoot != null)
+                projectileShoot.IncreaseCharge();
+
             DeactivateBullet();
+            return;
         }
 
         if (collision.gameObject.CompareTag("1stBoss"))
@@ -170,7 +146,11 @@ public class Projectile1 : MonoBehaviour
                 bossHealth.TakeDamage(damageAmount);
             }
 
+            if (projectileShoot != null)
+                projectileShoot.IncreaseCharge();
+
             DeactivateBullet();
+            return;
         }
 
         if (collision.gameObject.CompareTag("2ndBoss"))
@@ -182,7 +162,11 @@ public class Projectile1 : MonoBehaviour
                 bossHealth.TakeDamage(damageAmount);
             }
 
+            if (projectileShoot != null)
+                projectileShoot.IncreaseCharge();
+
             DeactivateBullet();
+            return;
         }
 
         if (collision.gameObject.CompareTag("3rdBoss"))
@@ -194,15 +178,14 @@ public class Projectile1 : MonoBehaviour
                 bossHealth.TakeDamage(damageAmount);
             }
 
+            if (projectileShoot != null)
+                projectileShoot.IncreaseCharge();
+
             DeactivateBullet();
+            return;
         }
 
-        if (collision.gameObject.tag == "Boundary")
-        {
-            DeactivateBullet();
-        }
-
-        if (collision.gameObject.tag == "Meteorito")
+        if (collision.gameObject.CompareTag("Meteorito"))
         {
             Meteorito meteoritoHealth = collision.GetComponent<Meteorito>();
             if (meteoritoHealth != null)
@@ -210,42 +193,25 @@ public class Projectile1 : MonoBehaviour
                 float damageAmount = meteoritoHealth.life * 0.34f;
                 meteoritoHealth.TakeDamage(damageAmount);
             }
+            return;
         }
 
         if (collision.gameObject.CompareTag("ProyectileBoss2"))
         {
             Misil_boss_2 health = collision.GetComponent<Misil_boss_2>();
             if (health != null)
-            {
-
                 health.TakeDamage(1f);
-            }
 
             DeactivateBullet();
+            return;
         }
 
+        if (collision.gameObject.CompareTag("Boundary"))
         {
-            if (collision.gameObject.CompareTag("EnemyPhasatron") ||
-                collision.gameObject.CompareTag("EnemyWall") ||
-                collision.gameObject.CompareTag("CrazyKamikaze") ||
-                collision.gameObject.CompareTag("EnemyKamikaze") ||
-                collision.gameObject.CompareTag("EnemyShip") ||
-                collision.gameObject.CompareTag("1stBoss") ||
-                collision.gameObject.CompareTag("2ndBoss") ||
-                collision.gameObject.CompareTag("3rdBoss"))
-            {
-                // Aumentar la barra de carga al impactar con un enemigo
-                if (projectileShoot != null)
-                {
-                    projectileShoot.IncreaseCharge();
-                }
-
-                DeactivateBullet();
-            }
+            DeactivateBullet();
+            return;
         }
     }
-
-
 
     private IEnumerator DeactivateAfterTime(float lifespan)
     {
@@ -253,19 +219,16 @@ public class Projectile1 : MonoBehaviour
         DeactivateBullet();
     }
 
-
     void DeactivateBullet()
     {
+        if (!gameObject.activeSelf) return; // Evitar llamadas dobles
+
+        rb.velocity = Vector2.zero;
+        gameObject.SetActive(false); // Desactivar primero, siempre
+
         if (bulletPool != null)
-        {
             bulletPool.ReturnBullet(gameObject);
-        }
-        else
-        {
-            gameObject.SetActive(false);
-        }
     }
-  
 
     void OnDisable()
     {

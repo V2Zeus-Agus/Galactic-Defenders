@@ -15,6 +15,9 @@ TagManager:
   - PowerUpShoot
   - 3rdBoss
   - kk
+  - Opciones
+  - Boundary
+  - Meteorito
   layers:
   - Default
   - TransparentFX

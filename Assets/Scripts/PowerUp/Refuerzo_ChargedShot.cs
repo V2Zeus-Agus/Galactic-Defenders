@@ -66,12 +66,7 @@ public class ReinforcementShip : MonoBehaviour
     private void FireProjectile()
     {
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-
-        if (projectile.TryGetComponent<Rigidbody2D>(out var rb))
-            rb.velocity = Vector2.up * bulletSpeed;
-
         activeBullets.Add(projectile);
-
     }
 
     public void StopShootingAndClear()

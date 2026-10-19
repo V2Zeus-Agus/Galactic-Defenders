@@ -276,7 +276,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 7
 --- !u!95 &4553778039474195920
 Animator:
@@ -315,6 +315,8 @@ MonoBehaviour:
   maxHealth: 1
   valuePared: 17
   target: {fileID: 0}
+  targetTag: EnemyPhasatron
+  reacquireInterval: 0.5
   moveSpeed: 3
   yDistance: 9
   dropProbability: 1

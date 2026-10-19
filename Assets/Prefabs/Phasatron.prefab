@@ -394,7 +394,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.2857144, y: 2.392857}
+    oldSize: {x: 2.3108323, y: 2.3928573}
     newSize: {x: 0.64, y: 0.64}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -428,7 +428,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 7
 --- !u!114 &-1371363797272287302
 MonoBehaviour:
@@ -446,6 +446,12 @@ MonoBehaviour:
   maxHealth: 1
   speed: 3
   startWaitTime: 4
+  dropProbability: 1
+  dropItemPrefab: {fileID: 2079447832053176235, guid: 35619b5cb7bd57840ba69fdb85fef4ca, type: 3}
+  dropProbability2: 0.9
+  dropItemPrefab2: {fileID: 2179046270816431085, guid: 7b81db826f1a25040a38da5f69bf6d14, type: 3}
+  deattheffect: {fileID: 7306677558204580821, guid: 12c5b461468326d458ca6be42d0b3953, type: 3}
+  deathEffectColor: {r: 0.36078432, g: 0.20392159, b: 0.18823531, a: 1}
   moveSpots:
   - {fileID: 0}
   - {fileID: 0}
@@ -459,13 +465,7 @@ MonoBehaviour:
   - {fileID: 0}
   EnemyGun: {fileID: 9020818805214303800}
   valuePhasatron: 70
-  dropProbability: 0.4
-  dropItemPrefab: {fileID: 2079447832053176235, guid: 35619b5cb7bd57840ba69fdb85fef4ca, type: 3}
-  deattheffect: {fileID: 7306677558204580821, guid: 12c5b461468326d458ca6be42d0b3953, type: 3}
-  dropProbability2: 0.85
-  dropItemPrefab2: {fileID: 2179046270816431085, guid: 7b81db826f1a25040a38da5f69bf6d14, type: 3}
   Clip: {fileID: -2133475591711354596}
-  deathEffectColor: {r: 0.36078432, g: 0.20392159, b: 0.18823531, a: 1}
 --- !u!95 &1079423315052327841
 Animator:
   serializedVersion: 5

@@ -9,7 +9,7 @@ public class ProjectileShoot : MonoBehaviour
     public PoolBulletPlayer bulletPool;
     public GameObject chargedShotPrefab; // Prefab para el disparo cargado
     public Transform firePoint;
-    public float bulletSpeed = 10f;
+    public float bulletSpeed = 15f;
     public float damage = 20f;
     public float lifespan;
 
@@ -169,7 +169,7 @@ public class ProjectileShoot : MonoBehaviour
             bullet.transform.position = firePoint.position;
             bullet.transform.rotation = firePoint.rotation;
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            rb.velocity = direction * bulletSpeed;
+            rb.velocity = direction * bulletSpeed * 2;
         }
     }
 

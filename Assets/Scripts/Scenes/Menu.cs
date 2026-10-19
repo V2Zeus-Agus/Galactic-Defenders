@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
-    [SerializeField] private float delayTime = 1f;
+    [SerializeField] private float delayTime = 0.5f;
 
     [SerializeField] private string mainMenuScene = "Menu";
     [SerializeField] private string levelSelectScene = "Select Levels";
